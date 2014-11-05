@@ -1,0 +1,73 @@
+
+
+<div class="class-icons container">
+  <div class="col-md-2">
+    <input type="image" ng-click="setPlayerClass('mage')" src="/images/mageicon.png">
+  </div>
+
+  <div class="col-md-2">
+    <input type="image" ng-click="setPlayerClass('druid')"  src="/images/druidicon.png">
+  </div>
+
+  <div class="col-md-2">
+    <input type="image" ng-click="setPlayerClass('hunter')"  src="/images/huntericon.png">
+  </div>
+
+  <div class="col-md-2">
+    <input type="image" ng-click="setPlayerClass('paladin')"  src="/images/paladinicon.png">
+  </div>
+
+  <div class="col-md-2">
+    <input type="image" ng-click="setPlayerClass('priest')"  src="/images/priesticon.png">
+  </div>
+
+  <div class="col-md-2">
+    <input type="image" ng-click="setPlayerClass('warlock')" src="/images/warlockicon.png">
+  </div>
+
+  <div class="col-md-2">
+    <input type="image" ng-click="setPlayerClass('warrior')"  src="/images/warrioricon.png">
+  </div>
+
+  <div class="col-md-2">
+    <h1>Neutral</h1>
+  </div>
+</div>
+
+<!-- selected cards -->
+
+<div class="yourdeck">
+  <table class="table table-hover table-condensed table-borderless">
+    <tbody>
+          <tr ng-repeat="card in yourDeck">
+            <td>{{ card.name }}</td>
+            <td>{{ card.count }}</td>
+          </tr>
+    </table>
+</div>
+
+<!-- search results-->
+
+<div ng-init="cardList()">
+  Name: <input type="text" ng-model="query.name">
+  Type: <select ng-model="query.type">
+    <option value="minion">Minion</option>
+    <option value="spell">Spell</option>
+    <option value="weapon">Weapon</option>
+  </select>
+</div>
+
+
+
+<div class="searchresults">
+  <table class="table table-hover table-condensed table-borderless">
+    <tbody>
+          <tr ng-repeat="card in cardLibrary | filter:query">
+            <td>{{ card.name }}</td>
+            <td>{{ card.type }}</td>
+            <td>{{ card.cost }}</td>
+            <td>{{ $index }}</td>
+            <td ng-click="addCard($index, card.name, card.rarity)"><span class="glyphicon glyphicon-plus"></span></td>
+          </tr>
+    </table>
+</div>
