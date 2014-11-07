@@ -30,20 +30,43 @@
   </div>
 
   <div class="col-md-2">
-    <h1>Neutral</h1>
+    <input type="image" ng-click="setPlayerClass('rogue')"  src="/images/rogueicon.png">
+  </div>
+
+   <div class="col-md-2">
+    <button type="button" class="btn btn-success neutral" ng-click="clearQuery()">Neutral</button>
   </div>
 </div>
 
 <!-- selected cards -->
 
-<div class="yourdeck">
-  <table class="table table-hover table-condensed table-borderless">
+<div class="yourdeck container" ng-repeat="card in yourDeck.cards track by $index">
+  <div class="row">
+    <div class="col-md-3">{{ card.name }}</div>
+    <div class="col-md-2"><button type="button" class="btn btn-danger" data-toggle="collapse" data-target=".card-{{$index}}" aria-expanded="true" aria-controls="demo">open</button></div>
+    <div class="col-md-2 {{ card.type }}">{{ card.type }}</div>
+    <div class="col-md-2">{{ card.cost }}</div>
+    <div class="col-md-2 {{ card.playerClass }}"></div>
+    <div class="col-md-1" ng-click="removeCard(card)"><span class="glyphicon glyphicon-minus"></span></div>
+  </div>
+  <div class="row collapse card-{{$index}}">
+    <div class-"col-md-12">{{card}}</div>
+  </div>
+</div>
+  <!-- <table class="table table-hover table-condensed table-borderless">
     <tbody>
-          <tr ng-repeat="card in yourDeck">
+          <tr ng-repeat="card in yourDeck.cards track by $index">
             <td>{{ card.name }}</td>
-            <td>{{ card.count }}</td>
+            <td class="{{ card.type }}">{{ card.type }}</td>
+            <td><button type="button" class="btn btn-danger" data-toggle="card-{{card.id}}" data-target="#demo" aria-expanded="true" aria-controls="demo">open</button></td>
+            <td>{{ card.cost }}</td>
+            <td class="{{ card.playerClass }}"></td>
+            <td ng-click="removeCard(card)"><span class="glyphicon glyphicon-minus"></span></td>
           </tr>
-    </table>
+          <tr>
+            <td class="collapse in card-{{card.id}}" colspan="6">{{card.name}} {{card.type}}</td>
+          </tr>
+    </table> -->
 </div>
 
 <!-- search results-->
@@ -51,6 +74,7 @@
 <div ng-init="cardList()">
   Name: <input type="text" ng-model="query.name">
   Type: <select ng-model="query.type">
+    <option value=""></option>
     <option value="minion">Minion</option>
     <option value="spell">Spell</option>
     <option value="weapon">Weapon</option>
@@ -64,10 +88,10 @@
     <tbody>
           <tr ng-repeat="card in cardLibrary | filter:query">
             <td>{{ card.name }}</td>
-            <td>{{ card.type }}</td>
+            <td class="{{ card.type }}">{{ card.type }}</td>
             <td>{{ card.cost }}</td>
             <td>{{ $index }}</td>
-            <td ng-click="addCard($index, card.name, card.rarity)"><span class="glyphicon glyphicon-plus"></span></td>
+            <td ng-click="addCard(card)"><span class="glyphicon glyphicon-plus"></span></td>
           </tr>
     </table>
 </div>

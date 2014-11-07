@@ -90,3 +90,59 @@ body {
     border-bottom: 0;
   }
 }
+
+.neutral {
+  height: 90px;
+  width: 90px;
+  border-radius: 50px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.Druid {
+  background-image: url(../images/druidicon.png);
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+}
+
+.Warlock {
+  background-image: url(../images/warlockicon.png);
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+}
+
+.Mage {
+  background-image: url(../images/mageicon.png);
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+}
+
+.Warrior {
+  background-image: url(../images/warrioricon.png);
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+}
+
+.Paladin {
+  background-image: url(../images/paladinicon.png);
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+}
+
+.Priest {
+  background-image: url(../images/priesticon.png);
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+}
+
+.Hunter {
+  background-image: url(../images/huntericon.png);
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+}
+
+.Rogue {
+  background-image: url(../images/rogueicon.png);
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+}

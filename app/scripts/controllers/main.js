@@ -18,94 +18,36 @@ angular.module('hearthitApp')
     $scope.cardLibrary = [];
     $scope.activeCards = [];
     $scope.query = {};
-    $scope.yourDeck = [];
+    $scope.yourDeck = {
+      cards: [],
+      addCard: function (card) {
+        var cardCount = _.where(this.cards, {'name':card.name}).length;
+        if (card.rarity === 'Legendary' && cardCount === 0) {
+          this.cards.push(card);
+        } else if (card.rarity !== 'Legendary' && cardCount < 2) {
+          this.cards.push(card);
+        }
+      }
+    };
 
-    $scope.addCard = function (index, name) {
-      if($scope.yourDeck.length > 0) {
-        for(var i = 0; i < $scope.yourDeck.length; i++) {
-          if($scope.yourDeck[i].name == name) {
-            console.log($scope.yourDeck[i].name)
-            if($scope.yourDeck[i].count === 1) {
-              console.log("1 exists") ;
-              $scope.yourDeck[i].count = 2;
-            } else {
-                console.log("At 2")
-            }
+    $scope.addCard = function (card) {
+      $scope.yourDeck.addCard(card);
+    };
 
-          } else {
-                console.log("No matching cards.")
-                $scope.yourDeck.push($scope.cardLibrary[index]);
-                $scope.yourDeck[i].count = 1;
-              }
-
-
-            }
-            // this madness is just here to catch an empty deck list
-          } else {
-            console.log("No cards.")
-            $scope.yourDeck.push($scope.cardLibrary[index]);
-            $scope.yourDeck[0]['count'] = 1;
-          }
-
-      
+    $scope.removeCard = function(card) {
+      var cardIndex = $scope.yourDeck.cards.indexOf(card);
+      console.log(cardIndex);
+      $scope.yourDeck.cards.splice(cardIndex, 1);     
     };
 
 
-    $scope.addNewCard = function (index, name, rarity) {
-      if($scope.isDeckEmpty($scope.yourDeck) = true) {
-        $scope.yourDeck.push($scope.cardLibrary[index]);
-        $scope.yourDeck[0]['count'] = 1;
-      } else {
-          if($scope.isLegendary(rarity) = true) {
-            $scope.addLegendary(index, name, rarity);
-        } else {
-          for(var i = 0; i < $scope.yourDeck.length; i++) {
-            if($scope.yourDeck[i].name == name) {
-              if($scope.yourDeck[i].count = 1) {
-                $scope.yourDeck[i].count = 2;
-              } else {
-                console.log("there are already 2 cards")
-              }
-            } else {
-                $scope.yourDeck.push($scope.cardLibrary[index]);
-                $scope.yourDeck[0]['count'] = 1;              
-            }          
-          }
-        }
-      }
-    }
-
-    $scope.addLegendary = function (index, name, rarity) {
-      for(var i = 0; i < $scope.yourDeck.length; i++) {
-        if($scope.yourDeck[i].name == name) {
-          console.log("Already there.")     
-        } else {
-          $scope.yourDeck.push($scope.cardLibrary[index]);
-          $scope.yourDeck[0]['count'] = 1;
-        } 
-      }
-    }
-
-    $scope.isLegendary = function (rarity) {
-      if(rarity == "Legendary"){
-        return true
-      } else {
-        return false
-      }
-    }
-
-    $scope.isDeckEmpty = function() {
-      if($scope.yourDeck.length > 0) {
-        return true
-      } else {
-        return false;
-      }
-
-    }
-
-
     $scope.setPlayerClass = function (playerClass) {
+
       $scope.query.playerClass = playerClass;
+    };
+
+    $scope.clearQuery = function() {
+      $scope.query = {};
     }
 
     $scope.cardList = function () {
@@ -117,13 +59,9 @@ angular.module('hearthitApp')
 
         keys.map(function (key) {
           for(var i = 0; i < theData[key].length; i++) {
-            if(theData[key][i].rarity === 'Legendary') {
-              theData[key][i].maxNumber = 1;  
-            } else {
-              theData[key][i].maxNumber = 2;
+            if(theData[key][i].collectible === true) {
+              $scope.cardLibrary.push(theData[key][i]);
             }
-            
-            $scope.cardLibrary.push(theData[key][i]);
           }
         });
         console.log($scope.cardLibrary);
